@@ -1,7 +1,14 @@
 const express = require("express")
 const app = express()
 const user = require("./connection")
+const cors = require("cors")
 app.use(express.json())
+app.use(cors())
+
+app.get("/getdata",(req,res)=>{
+    res.send("hello bhai fortntendlk;dnfl;dnab;ldkfbldn")
+})
+
 
 app.post("/",async(req,res)=>{
     try {
