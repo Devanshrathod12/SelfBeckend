@@ -6,6 +6,7 @@ import SignUp from '../SignUp/SignUp.jsx'
 
 const SignIn = (props) => {
 
+  
     
   return (props.trigger) ? (
     <div className="login">
