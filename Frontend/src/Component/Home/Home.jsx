@@ -3,12 +3,11 @@ import { assets } from "../../assets/assets";
 import SignUp from "../SignUp/SignUp";
 import SignIn from "../SignIn/SignIn";
 import React,{useEffect,useState} from 'react'
-import axios from "axios"
+
 
 const Home = () => {
 
   
-
   const [signUpPopup, setSignUpPopup] = useState(false);
   const [signInPopup, setSignInPopup] = useState(false);
 
@@ -21,22 +20,9 @@ const Home = () => {
     setSignInPopup(true);
     setSignUpPopup(false);
   };
-
-  const [data, setdata] = useState("")
-
-  const getdata = async()=>{
-      const responce = await axios.get("http://localhost:3000/getdata");
-      setdata(responce.data)
-  }
-   useEffect(() => {
-     getdata()
-   }, [])
-   
-
   return (
     <>
     <div>
-     {data}
      <div className="Home">
       <img className="logo" src={assets.RentTenant_logo} alt="Rent Tenant Logo" />
 

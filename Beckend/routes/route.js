@@ -1,6 +1,12 @@
-const mongoose = require("mongoose")
-const express = require("express")
+import express from "express"
+import userController from '../controller/usercontroller.js';
+const { loginUser, registerUser } = userController;
 
-const routes = express.Router()
 
-routes=routes("/login")
+const UserRoutes = express.Router()
+
+
+UserRoutes.post("/register", registerUser)
+UserRoutes.post("/login", loginUser)
+
+export default UserRoutes
