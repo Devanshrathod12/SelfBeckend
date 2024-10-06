@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import './SignIn.css'
 import { assets } from '../../assets/assets'
 import { Link } from 'react-router-dom'
@@ -8,47 +8,49 @@ import { toast } from 'react-toastify'
 
 const SignIn = (props) => {
 
-    const url = "http://localhost:3000"
-    
-    const [data, setdata] = useState({
-      email:"",
-      password:""
+   const url = 'http://localhost:3000'
+ 
+  const [data, setData] = useState({
+    email: "",
+    password: ""
+  });
 
-    })
+  const onchangeHandler = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
 
-    const onChangeHendler = (event) =>  {
-        const name = event.target.name;
-        const value = event.target.value;
+    setData(data => ({...data, [name]:value}));
+  }
 
-        setdata( data => ({...data ,[name]:value}))
+  const onLogin = async (event) => {
+    event.preventDefault();
+    let newUrl = `${url}/api/user/login`
+
+    try {
+      const response = await axios.post(newUrl, data)
+      if (response.data.success) {
+        setToken(response.data.token)
+        toast.success('User Login Successfull')
+      }
+      else{
+        toast.error(response.data.message)
+      }
     }
-
-  const onSignIn = async(event) => {
-     event.preventdefault();
-     const newurl = `${url}/api/user/login`
-
-     try {
-       const responce = await axios.post(newurl, data)
-       if (responce.data.success) {
-          toast.success("login ho gya")
-       } else {
-         toast.error("glt hai yrr kuch")
-       }
-     } catch (error) {
-        toast.error("glt h kuch")
-     }
+    catch (error) {
+      toast.error("Something went worng. Please try again!")  
+    }
   }
 
   return (props.trigger) ? (
-    <div className="login">
-      <form onsubmit={onSignIn} className='login-container'>
+<div className="login">
+      <form onSubmit={onLogin} className='login-container'>
         <div className="login-title">
           <h2>Login</h2>
           <img onClick={() => props.setTrigger(false)} src={assets.cross_icon} alt="" />
         </div>
         <div className="login-inputs">
-          <input type="email" name="email" placeholder="Email" value={data.email} onChange={onChangeHendler} required />
-          <input type="password" name="password" placeholder="Password" value={data.password} onChange={onChangeHendler} required />
+          <input type="email" name='email' placeholder="Email" value={data.email} onChange={onchangeHandler} required />
+          <input type="password" name='password' placeholder="Password" value={data.password} onChange={onchangeHandler} required />
         </div>
         <button type="Submit">Login</button>
         <div className="login-conditon">

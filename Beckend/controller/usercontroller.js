@@ -39,9 +39,9 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
     const {email, password} = req.body;
     try {
-        const user = await userModel.findOne({email});
+        const users = await user.findOne({email});
 
-        if(!user){
+        if(!users){
             return res.json({
                 success: false,
                 message: 'User not found'
