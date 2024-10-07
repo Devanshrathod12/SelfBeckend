@@ -22,24 +22,33 @@ const SignIn = (props) => {
     setData(data => ({...data, [name]:value}));
   }
 
+  const setToken = (token) => {
+    localStorage.setItem('token', token);  // Store token in localStorage
+  };
+
   const onLogin = async (event) => {
     event.preventDefault();
-    let newUrl = `${url}/api/user/login`
+    let newUrl = `${url}/api/user/login`;
 
     try {
-      const response = await axios.post(newUrl, data)
+      const response = await axios.post(newUrl, data, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
       if (response.data.success) {
-        setToken(response.data.token)
-        toast.success('User Login Successfull')
+        setToken(response.data.token);
+        toast.success('User Login Successful');
+      } else {
+        toast.error(response.data.message);
       }
-      else{
-        toast.error(response.data.message)
-      }
+    } catch (error) {
+      console.error("Error during login:", error);  // Log the error for better debugging
+      toast.error("Something went wrong. Please try again!");  
     }
-    catch (error) {
-      toast.error("Something went worng. Please try again!")  
-    }
-  }
+  };
+   
 
   return (props.trigger) ? (
 <div className="login">
