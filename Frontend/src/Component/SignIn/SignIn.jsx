@@ -38,6 +38,7 @@ const SignIn = (props) => {
       });
 
       if (response.data.success) {
+        
         setToken(response.data.token);
         toast.success('User Login Successful');
       } else {
@@ -61,7 +62,7 @@ const SignIn = (props) => {
           <input type="email" name='email' placeholder="Email" value={data.email} onChange={onchangeHandler} required />
           <input type="password" name='password' placeholder="Password" value={data.password} onChange={onchangeHandler} required />
         </div>
-        <button type="Submit">Login</button>
+        <button  type="Submit">Login</button>
         <div className="login-conditon">
             <input type="checkbox" required/>
             <p>By Continuing, I Agree to the terms of use & privacy policy.</p>
